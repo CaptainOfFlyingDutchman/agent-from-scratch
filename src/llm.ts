@@ -1,4 +1,5 @@
 import { OpenAI } from 'openai'
+import type { AIMessage } from '../types.ts'
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_AI_KEY,
@@ -9,11 +10,11 @@ const openai = new OpenAI({
   }
 })
 
-export const runLLM = async ({ userMessage }: { userMessage: string }) => {
+export const runLLM = async ({ messages }: { messages: AIMessage[] }) => {
   const { choices } = await openai.chat.completions.create({
     model: 'openai/gpt-4o-mini',
     temperature: 0.1,
-    messages: [{ role: 'user', content: userMessage }]
+    messages
   })
 
   return choices[0].message.content
