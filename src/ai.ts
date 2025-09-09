@@ -1,19 +1,23 @@
-import { createOpenRouter } from '@openrouter/ai-sdk-provider'
-import { generateText } from 'ai'
 import dotenv from 'dotenv'
+import { OpenAI } from 'openai'
 
 dotenv.config()
 
-const openRouter = createOpenRouter({
-  apiKey: process.env.AI_KEY,
+const openai = new OpenAI({
+  apiKey: process.env.OPEN_AI_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+  defaultHeaders: {
+    'Http-Referer': 'https://manvendrask.com',
+    'X-Title': 'Learning AI'
+  }
 })
 
 export async function runLLM(userMessage: string) {
-  const { text } = await generateText({
-    model: openRouter.chat('openai/gpt-4o-mini'),
+  const { choices } = await openai.chat.completions.create({
+    model: 'openai/gpt-4o-mini',
     temperature: 0.1,
-    messages: [{ role: 'user', content: userMessage }],
+    messages: [{ role: 'user', content: userMessage }]
   })
 
-  return text
+  return choices[0].message.content
 }
