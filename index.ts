@@ -16,6 +16,5 @@ const weatherTool = {
     reasoning: z.string().describe('Why did you pick this tool?')
   })
 }
-const response = await runAgent({ userMessage, tools: [weatherTool] })
 
-console.log('Response: ', response)
+await runAgent({ userMessage, tools: [weatherTool] })
