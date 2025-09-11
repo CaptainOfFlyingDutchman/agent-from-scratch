@@ -15,7 +15,7 @@ export const addMetadata = (message: AIMessage) => {
   return {
     ...message,
     id: uuidv4(),
-    createdAt: new Date().toISOString(),
+    createdAt: new Date().toISOString()
   }
 }
 
@@ -25,7 +25,7 @@ export const removeMetadata = (message: MessageWithMetadata) => {
 }
 
 const defaultData: Data = {
-  messages: [],
+  messages: []
 }
 
 export const getDb = async () => {
@@ -42,4 +42,8 @@ export const addMessages = async (messages: AIMessage[]) => {
 export const getMessages = async () => {
   const db = await getDb()
   return db.data.messages.map(removeMetadata)
+}
+
+export async function saveToolResponse(toolId: string, toolResponse: string) {
+  return await addMessages([{ role: 'tool', content: toolResponse, tool_call_id: toolId }])
 }
