@@ -1,7 +1,7 @@
 import type { OpenAI } from 'openai'
 
 function getWeather(input: any) {
-  return `hot, 90deg`
+  return `hot, 90deg celsius`
 }
 
 export async function runTool(toolCall: OpenAI.ChatCompletionMessageToolCall, userMessage: string) {
