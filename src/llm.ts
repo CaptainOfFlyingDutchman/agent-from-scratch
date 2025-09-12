@@ -1,15 +1,6 @@
-import { OpenAI } from 'openai'
 import type { AIMessage } from '../types.ts'
 import { zodFunction } from 'openai/helpers/zod'
-
-const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_KEY,
-  baseURL: 'https://openrouter.ai/api/v1',
-  defaultHeaders: {
-    'Http-Referer': 'https://manvendrask.com',
-    'X-Title': 'Learning AI'
-  }
-})
+import { openai } from './ai.ts'
 
 export const runLLM = async ({ messages, tools }: { messages: AIMessage[], tools: any[] }) => {
   const formattedTools = tools.map(zodFunction)
